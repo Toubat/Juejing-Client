@@ -1,15 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InfiniteScrollList from "./InfiniteScrollList";
-import { Paper } from "@material-ui/core";
+import TabItem from "./TabItem.jsx";
 
-import clsx from "clsx";
+export default function MainContent({ trigger, primaryTab, sortBy }) {
+  const [secondaryTab, setSecondaryTab] = useState(null);
 
-export default function MainContent({ posts, trigger }) {
+  useEffect(() => {
+    if (primaryTab.children) {
+      setSecondaryTab(primaryTab.children[0].category_id);
+    } else {
+      setSecondaryTab(null);
+    }
+  }, [primaryTab]);
+
+  const handleSelectSecondaryTab = (id) => {
+    setSecondaryTab(id);
+  };
+
   return (
     <React.Fragment>
       <div className="main-content">
-        <Paper className="secondary-tabs" style={{ borderRadius: 0 }}></Paper>
-        <InfiniteScrollList />
+        <div className="secondary-tabs" style={{ borderRadius: 15 }}>
+          <div className="tab-container">
+            {primaryTab.children ? (
+              primaryTab.children.map((tab, i) => (
+                <TabItem
+                  key={`${tab}-${i}`}
+                  name={tab.category_name}
+                  selected={secondaryTab === tab.category_id}
+                  onSelected={() => handleSelectSecondaryTab(tab.category_id)}
+                />
+              ))
+            ) : (
+              <TabItem name={primaryTab.category_name} selected={true} />
+            )}
+          </div>
+        </div>
+
+        <InfiniteScrollList
+          primaryCategory={primaryTab.category_id}
+          secondaryCategory={secondaryTab}
+          sortBy={sortBy}
+        />
       </div>
     </React.Fragment>
   );

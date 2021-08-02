@@ -9,7 +9,7 @@ class App extends Component {
       <div className="App">
         <Router>
           <Switch>
-            <Route path="/" component={MainPage} />
+            <Route path="/" render={(props) => <MainPage {...props} />} />
           </Switch>
         </Router>
       </div>

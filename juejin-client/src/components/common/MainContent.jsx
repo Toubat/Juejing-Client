@@ -8,7 +8,7 @@ export default function MainContent({ posts, trigger }) {
   return (
     <React.Fragment>
       <div className="main-content">
-        <Paper className="secondary-tabs" style={{ marginBottom: 15 }}></Paper>
+        <Paper className="secondary-tabs" style={{ borderRadius: 0 }}></Paper>
         <InfiniteScrollList />
       </div>
     </React.Fragment>

@@ -2,11 +2,15 @@
   --dark-color: #2f3542;
   --dark-color-dark: #2c303a;
   --cloud-color: #f1f2f6;
-  --grey-color: #57606f;
+  --grey-color: #414650;
   --blue-color: #1e90ff;
   --orange-color: #ffa502;
   --orange-color-light: #ffc14d;
   --content-max-width: 1000px;
+  --main-tabs-height: 40px;
+  --main-header-height: 60px;
+  --secondary-tabs-height: 40px;
+  --bottom-nav-height: 60px;
 }
 
 body {
@@ -26,7 +30,7 @@ code {
 /* Header */
 .main-header {
   background-color: var(--dark-color);
-  height: 60px;
+  height: var(--main-header-height);
   box-sizing: border-box;
   z-index: 1;
   color: white;
@@ -79,7 +83,7 @@ code {
 
 /* Main Tabs */
 .main-tabs {
-  height: 40px;
+  height: var(--main-tabs-height);
   text-transform: none;
   display: flex;
   align-items: center;
@@ -94,7 +98,7 @@ code {
 .main-tabs .link {
   text-decoration: none;
   color: white;
-  font-size: large;
+  font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s;
 }
@@ -129,11 +133,11 @@ code {
 /* Main Content */
 .main-content {
   background-color: var(--cloud-color);
-  min-height: 100vh;
-  padding: 15px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 10px;
 }
 
 /* Bottom Navigation */
@@ -143,26 +147,31 @@ code {
 
 .MuiBottomNavigationAction-root {
   color: white !important;
+  height: var(--bottom-nav-height);
 }
 
 /* Secondary tabs */
 .secondary-tabs {
-  height: 50px;
+  height: var(--secondary-tabs-height);
   background-color: white;
   max-width: var(--content-max-width);
   width: 100%;
+  margin: 10px 10px;
 }
 
 @media screen and (max-width: 550px) {
   .main-content {
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }
 
 /* Infinite Scrolling Post List */
 .post-list {
-  height: 1500px;
+  height: calc(
+    100vh - var(--main-header-height) - var(--main-tabs-height) -
+      var(--bottom-nav-height) - var(--secondary-tabs-height) - 30px
+  );
   background-color: white;
   max-width: var(--content-max-width);
   width: 100%;

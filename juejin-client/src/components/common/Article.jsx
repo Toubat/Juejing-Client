@@ -1,17 +1,10 @@
-import React, { useRef } from "react";
-import { useMediaQuery, useTheme } from "@material-ui/core";
+import React, { forwardRef } from "react";
 // icon
 import ViewIcon from "@material-ui/icons/Visibility";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import CommentIcon from "@material-ui/icons/ChatBubbleOutlineRounded";
 
-export default function Article({ article }) {
-  const theme = useTheme();
-  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
-  const contentRef = useRef(null);
-
-  const textWidth = matchesXS ? 190 : 345;
-
+function Article({ article, loading }, ref) {
   const unixTimeToDate = () => {
     const publishTime = new Date(parseInt(article.article_info.ctime) * 1000);
     const currTime = new Date(Math.round(Date.now()));
@@ -38,6 +31,53 @@ export default function Article({ article }) {
     return `${firstCategory} ∙ ${secondCategory}`;
   };
 
+  const LoadingBlock = ({ width, height }) => (
+    <div
+      className="loading-block"
+      style={{
+        width: width ? width : undefined,
+        height: height ? height : undefined,
+      }}
+    ></div>
+  );
+
+  if (loading) {
+    return (
+      <div className="article-container">
+        <div className="article-status">
+          <div className="article-status-item dark" style={{ paddingLeft: 0 }}>
+            <LoadingBlock width={"4rem"} />
+          </div>
+          <div className="article-status-item">
+            <LoadingBlock width={"4rem"} />
+          </div>
+          <div className="article-status-item" style={{ borderRight: "none" }}>
+            <LoadingBlock width={"4rem"} />
+          </div>
+        </div>
+        <div className="article-info">
+          <div className="article-content">
+            <div className="article-header" style={{ width: "inherit" }}>
+              <LoadingBlock />
+            </div>
+            <div className="article-brief" style={{ width: "inherit" }}>
+              <LoadingBlock />
+            </div>
+            <div className="article-footer">
+              <div className="article-footer-container">
+                <LoadingBlock width={"10rem"} />
+              </div>
+            </div>
+          </div>
+          <div className="article-image">
+            <LoadingBlock width={120} height={80} />
+          </div>
+        </div>
+        <div className="article-divider" ref={ref}></div>
+      </div>
+    );
+  }
+
   return (
     <div className="article-container">
       <div className="article-status">
@@ -52,7 +92,7 @@ export default function Article({ article }) {
         </div>
       </div>
       <div className="article-info">
-        <div className="article-content" ref={contentRef}>
+        <div className="article-content">
           <div className="article-header" style={{ width: "inherit" }}>
             {article.article_info.title}
           </div>
@@ -80,7 +120,6 @@ export default function Article({ article }) {
           <img
             src={article.article_info.cover_image}
             style={{ height: 80, width: 120, objectFit: "cover" }}
-            alt="cover-image"
           />
         </div>
       </div>
@@ -88,3 +127,7 @@ export default function Article({ article }) {
     </div>
   );
 }
+
+const ForwardArticle = forwardRef(Article);
+
+export default ForwardArticle;

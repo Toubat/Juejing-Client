@@ -1,33 +1,73 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { Paper } from "@material-ui/core";
 import Article from "./Article.jsx";
-// apix
-import { getArticleById, getArticles } from "../../fake-api";
+// api
+import { getArticles } from "../../fake-api";
+
+const loadAmount = 30;
 
 export default function InfiniteScrollList({
-  primaryCategory,
+  primaryCategory = 0,
   secondaryCategory,
   sortBy,
 }) {
   const [offset, setOffset] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [articles, setArticles] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
+  const observer = useRef();
 
   useEffect(() => {
-    if (hasMore) {
-      getArticles(primaryCategory, sortBy, offset, 20).then((res) => {
-        setArticles(res.data.articles);
-        setHasMore(res.has_more);
-        console.log(res.data.articles);
+    setArticles([]);
+    setOffset(0);
+    setHasMore(true);
+  }, [primaryCategory, secondaryCategory]);
+
+  const lastArticleElementRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setLoading(true);
+          setTimeout(() => {
+            getArticles(primaryCategory, sortBy, offset, loadAmount)
+              .then((res) => {
+                setArticles((articles) => [...articles, ...res.data.articles]);
+                setHasMore(res.has_more);
+                setOffset((offset) => offset + loadAmount);
+                console.log(`Offset: ${offset}`);
+                setLoading(false);
+              })
+              .catch((e) => {
+                setLoading(false);
+              });
+          }, 1000);
+        }
       });
-    }
-  }, [primaryCategory, secondaryCategory, sortBy, offset, hasMore]);
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore]
+  );
+
+  const getFilteredArticles = (articles) => {
+    if (primaryCategory === 0) return articles;
+    return articles.filter(
+      (article) =>
+        article.category_info.second_category_id === secondaryCategory
+    );
+  };
 
   return (
-    <Paper className="post-list" style={{ borderRadius: 0 }}>
-      {articles.map((article, i) => (
-        <Article key={`${article.article_id}-${i}`} article={article} />
-      ))}
-    </Paper>
+    <React.Fragment>
+      <Paper className="post-list" style={{ borderRadius: 0 }}>
+        {getFilteredArticles(articles).map((article, i) => (
+          <Article key={`$article-${i}`} article={article} loading={false} />
+        ))}
+        {hasMore && (
+          <Article article={null} loading={true} ref={lastArticleElementRef} />
+        )}
+      </Paper>
+    </React.Fragment>
   );
 }

@@ -120,6 +120,7 @@ function Article({ article, loading }, ref) {
           <img
             src={article.article_info.cover_image}
             style={{ height: 80, width: 120, objectFit: "cover" }}
+            alt={article.article_info.title}
           />
         </div>
       </div>

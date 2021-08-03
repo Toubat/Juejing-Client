@@ -269,6 +269,10 @@ code {
   white-space: nowrap;
 }
 
+.article-header.no-image {
+  max-width: calc(100vw - 20px - 30px - 10px);
+}
+
 .article-brief {
   font-size: 0.87rem;
   max-width: min(calc(100vw - 20px - 30px - 120px - 10px), 830px);
@@ -277,6 +281,10 @@ code {
   white-space: nowrap;
   font-weight: 500;
   color: var(--grey-color-light);
+}
+
+.article-brief.no-image {
+  max-width: calc(100vw - 20px - 30px - 10px);
 }
 
 .article-footer {

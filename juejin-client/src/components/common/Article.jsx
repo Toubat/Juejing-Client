@@ -1,4 +1,5 @@
 import React, { forwardRef } from "react";
+import clsx from "clsx";
 // icon
 import ViewIcon from "@material-ui/icons/Visibility";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
@@ -78,6 +79,7 @@ function Article({ article, loading }, ref) {
     );
   }
 
+  const hasImage = article.article_info.cover_image.length !== 0;
   return (
     <div className="article-container">
       <div className="article-status">
@@ -93,10 +95,16 @@ function Article({ article, loading }, ref) {
       </div>
       <div className="article-info">
         <div className="article-content">
-          <div className="article-header" style={{ width: "inherit" }}>
+          <div
+            className={clsx("article-header", !hasImage && "no-image")}
+            style={{ width: "inherit" }}
+          >
             {article.article_info.title}
           </div>
-          <div className="article-brief" style={{ width: "inherit" }}>
+          <div
+            className={clsx("article-brief", !hasImage && "no-image")}
+            style={{ width: "inherit" }}
+          >
             {article.article_info.brief_content}
           </div>
           <div className="article-footer">
@@ -116,13 +124,15 @@ function Article({ article, loading }, ref) {
             </div>
           </div>
         </div>
-        <div className="article-image">
-          <img
-            src={article.article_info.cover_image}
-            style={{ height: 80, width: 120, objectFit: "cover" }}
-            alt={article.article_info.title}
-          />
-        </div>
+        {hasImage && (
+          <div className="article-image">
+            <img
+              src={article.article_info.cover_image}
+              style={{ height: 80, width: 120, objectFit: "cover" }}
+              alt={article.article_info.title}
+            />
+          </div>
+        )}
       </div>
       <div className="article-divider"></div>
     </div>

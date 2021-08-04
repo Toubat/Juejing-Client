@@ -5,7 +5,7 @@ import ViewIcon from "@material-ui/icons/Visibility";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import CommentIcon from "@material-ui/icons/ChatBubbleOutlineRounded";
 
-function Article({ article, loading }, ref) {
+function Article({ article, loading, history }, ref) {
   const unixTimeToDate = () => {
     const publishTime = new Date(parseInt(article.article_info.ctime) * 1000);
     const currTime = new Date(Math.round(Date.now()));
@@ -42,7 +42,7 @@ function Article({ article, loading }, ref) {
     ></div>
   );
 
-  if (loading) {
+  if (loading || article === null) {
     return (
       <div className="article-container">
         <div className="article-status">
@@ -81,7 +81,10 @@ function Article({ article, loading }, ref) {
 
   const hasImage = article.article_info.cover_image.length !== 0;
   return (
-    <div className="article-container">
+    <div
+      className="article-container"
+      onClick={() => history.push(`/${article.article_info.article_id}`)}
+    >
       <div className="article-status">
         <div className="article-status-item dark" style={{ paddingLeft: 0 }}>
           {article.author_user_info.user_name}

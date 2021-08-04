@@ -10,6 +10,7 @@ import HistoryIcon from "@material-ui/icons/History";
 import clsx from "clsx";
 // local component
 import MainContent from "../common/MainContent";
+import Header from "../common/Header";
 // api
 import { getCategories } from "../../fake-api";
 
@@ -65,26 +66,9 @@ export default function MainPage({ history }) {
     </div>
   );
 
-  const Header = () => (
-    <header className={clsx("main-header", !trigger && "sticky")}>
-      <div className="header-logo" onClick={() => history.push("/")}>
-        <img
-          src="https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/6bdafd801c878b10edb5fed5d00969e9.svg"
-          alt="掘金标志"
-        />
-        <h2 style={{ textAlign: "center", margin: 0, marginLeft: "0.8rem" }}>
-          掘金
-        </h2>
-      </div>
-      <div className="header-avatar">
-        <div className="avatar">BY</div>
-      </div>
-    </header>
-  );
-
   return (
     <React.Fragment>
-      <Header />
+      <Header trigger={trigger} history={history} />
       <MainTabs />
       <MainContent
         trigger={trigger}
@@ -93,6 +77,7 @@ export default function MainPage({ history }) {
           categories.filter((tab) => tab.category_id === primaryTab)[0]
         }
         sortBy={sortBy}
+        history={history}
       />
       <BottomNavigation
         value={value}

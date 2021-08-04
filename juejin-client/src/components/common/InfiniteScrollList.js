@@ -10,6 +10,7 @@ export default function InfiniteScrollList({
   primaryCategory = 0,
   secondaryCategory,
   sortBy,
+  history,
 }) {
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -58,11 +59,17 @@ export default function InfiniteScrollList({
     );
   };
 
+  // console.log(articles);
   return (
     <React.Fragment>
       <Paper className="post-list" style={{ borderRadius: 0 }}>
         {getFilteredArticles(articles).map((article, i) => (
-          <Article key={`$article-${i}`} article={article} loading={false} />
+          <Article
+            key={`$article-${i}`}
+            article={article}
+            loading={false}
+            history={history}
+          />
         ))}
         {hasMore && (
           <Article article={null} loading={true} ref={lastArticleElementRef} />

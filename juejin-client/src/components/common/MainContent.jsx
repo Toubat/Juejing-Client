@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import InfiniteScrollList from "./InfiniteScrollList";
 import TabItem from "./TabItem.jsx";
 
-export default function MainContent({ trigger, primaryTab, sortBy }) {
+export default function MainContent({ trigger, primaryTab, sortBy, history }) {
   const [secondaryTab, setSecondaryTab] = useState(null);
 
   useEffect(() => {
@@ -41,6 +41,7 @@ export default function MainContent({ trigger, primaryTab, sortBy }) {
           primaryCategory={primaryTab.category_id}
           secondaryCategory={secondaryTab}
           sortBy={sortBy}
+          history={history}
         />
       </div>
     </React.Fragment>

@@ -8,7 +8,7 @@ import { getArticleById } from "../../fake-api";
 
 const triggerHeight = 200;
 
-export default function ArticleDetail({ history, match }) {
+export default function ArticleDetail({ history, match, user }) {
   const [article, setArticle] = useState(null);
 
   const trigger = useScrollTrigger({

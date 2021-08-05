@@ -162,10 +162,6 @@ export default function Comment({ article }) {
             setInputFocus(true);
           }}
           onBlur={(e) => setInputFocus(false)}
-          style={{
-            borderColor: inputFocus ? "#1e90ff" : undefined,
-            boxShadow: inputFocus ? "0 0 0px 3px #99ccff" : undefined,
-          }}
           value={comment}
           onChange={(e) => {
             e.preventDefault();

@@ -16,7 +16,7 @@ import { getCategories } from "../../fake-api";
 
 const triggerHeight = 200;
 
-export default function MainPage({ history }) {
+export default function MainPage({ history, user }) {
   const [primaryTab, setPrimaryTab] = useState(0);
   const [categories, setCategories] = useState([]);
   const [sortBy, setSortBy] = useState("hot");

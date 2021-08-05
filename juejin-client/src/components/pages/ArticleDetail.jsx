@@ -91,7 +91,7 @@ export default function ArticleDetail({ history, match }) {
 
   const ArticleContent = ({ article }) => (
     <div className="article-detail-content">
-      <td dangerouslySetInnerHTML={{ __html: article.article_content }} />
+      <div dangerouslySetInnerHTML={{ __html: article.article_content }} />
     </div>
   );
 

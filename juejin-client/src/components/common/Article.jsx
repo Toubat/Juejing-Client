@@ -1,4 +1,5 @@
 import React, { forwardRef } from "react";
+import LoadingBlock from "./LoadingBlock";
 import clsx from "clsx";
 // icon
 import ViewIcon from "@material-ui/icons/Visibility";
@@ -31,16 +32,6 @@ function Article({ article, loading, history }, ref) {
 
     return `${firstCategory} ∙ ${secondCategory}`;
   };
-
-  const LoadingBlock = ({ width, height }) => (
-    <div
-      className="loading-block"
-      style={{
-        width: width ? width : undefined,
-        height: height ? height : undefined,
-      }}
-    ></div>
-  );
 
   if (loading || article === null) {
     return (

@@ -22,6 +22,7 @@ export default function InfiniteScrollList({
     setArticles([]);
     setOffset(0);
     setHasMore(true);
+    setLoading(false);
   }, [primaryCategory, secondaryCategory]);
 
   const lastArticleElementRef = useCallback(

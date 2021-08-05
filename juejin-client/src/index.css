@@ -1,7 +1,7 @@
 :root {
   --dark-color: #2f3542;
   --dark-color-dark: #2c303a;
-  --cloud-color: #f1f2f6;
+  --cloud-color: #f5f5fa;
   --cloud-color-dark: #cecfd1;
   --grey-color: #353941;
   --grey-color-light: #767a80;
@@ -522,7 +522,12 @@ code {
   transition: all 0.2s;
 }
 
-.comment-buttons > button:hover {
+.comment-buttons > button:disabled {
+  opacity: 0.5;
+  cursor: inherit;
+}
+
+.comment-buttons > button:hover:not([disabled]) {
   background: rgb(64, 180, 248);
 }
 
@@ -535,4 +540,104 @@ code {
   transition: all 0.2s;
   font-size: 0.9rem;
   box-sizing: border-box;
+}
+
+.comment-container {
+  display: flex;
+  padding-top: 20px;
+}
+
+.comment-reply .comment-container {
+  padding: 15px 10px 0px 10px;
+}
+
+.comment-threads {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  width: 100%;
+}
+
+.comment-reply .comment-threads {
+  width: calc(100% - 40px);
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  padding-bottom: 10px;
+  width: calc(100vw - 40px - 40px - 32px - 10px);
+}
+
+.comment-reply .comment-header {
+  width: calc(100vw - 40px - 40px - 32px - 10px - 32px - 35px);
+}
+
+.comment-header > span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.comment-header .comment-light {
+  padding-left: 8px;
+  color: var(--grey-color-light);
+}
+
+.comment-actions {
+  font-size: 0.9rem;
+  color: var(--grey-color-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-top: 10px;
+}
+
+.comment-thumb-reply {
+  display: flex;
+  font-size: 0.8rem;
+  align-items: center;
+}
+
+.comment-thumb-reply > div {
+  display: flex;
+  align-items: center;
+}
+
+.comment-reply {
+  margin-top: 15px;
+  background: var(--cloud-color);
+  width: calc(100vw - 40px - 40px - 32px - 10px);
+}
+
+.comment-divider {
+  padding: 15px 0px 0px 0px;
+  border-bottom: 1px solid var(--cloud-color-dark);
+}
+
+.comment-icon:hover {
+  color: var(--blue-color);
+  cursor: pointer;
+}
+
+@media screen and (min-width: 1000px) {
+  .comment-header {
+    width: calc(var(--content-max-width) - 40px - 40px - 32px - 10px);
+  }
+  .comment-reply .comment-header {
+    width: calc(
+      var(--content-max-width) - 40px - 40px - 32px - 10px - 32px - 10px
+    );
+  }
+  .comment-reply {
+    width: calc(var(--content-max-width) - 40px - 40px - 32px - 10px);
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .comment-reply .comment-thumb-reply {
+    display: none;
+  }
 }

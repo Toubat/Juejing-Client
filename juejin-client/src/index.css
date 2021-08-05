@@ -80,10 +80,46 @@ code {
   background-color: var(--orange-color-light);
 }
 
-.avatar {
-  font-size: large;
+.header-logout {
+  border: 1px solid var(--blue-color);
+  background: transparent;
+  border-radius: 3px;
+  padding: 5px;
+  min-width: 4.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-right: 15px;
 }
 
+.header-logout:hover {
+  border: 1px solid var(--blue-color);
+  background: var(--blue-color);
+}
+
+.avatar {
+  font-size: 800;
+}
+
+.header-login-button {
+  border: 1px solid var(--blue-color);
+  background: transparent;
+  border-radius: 3px;
+  padding: 5px;
+  min-width: 6rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-right: 15px;
+}
+
+.header-login-button:hover {
+  background: var(--blue-color);
+}
 /* Main Tabs */
 .main-tabs {
   height: var(--main-tabs-height);

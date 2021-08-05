@@ -1,6 +1,6 @@
-import { categories } from './data/categories';
-import { articles } from './data/articles';
-import { comments } from './data/comments';
+import { categories } from "./data/categories";
+import { articles } from "./data/articles";
+import { comments } from "./data/comments";
 
 /**
  * 获取所有分类
@@ -21,17 +21,24 @@ export async function getCategories() {
  * @param {*} offset 分页参数参考 sql 的 offset 和 limit
  * @param {*} limit 同上
  */
-export async function getArticles(categoryId = 0, sortBy = 'hot', offset = 0, limit = 10) {
+export async function getArticles(
+  categoryId = 0,
+  sortBy = "hot",
+  offset = 0,
+  limit = 10
+) {
   const sortFunc = {
     new: (a, b) => b.article_info.ctime - a.article_info.ctime,
     hot: (a, b) => b.article_info.digg_count - a.article_info.digg_count,
   }[sortBy];
 
-  const articlesWithCategory = categoryId ?
-    articles.filter(
-      a => a.category_info.first_category_id === categoryId || a.category_info.second_category_id === categoryId
-    ) :
-    articles;
+  const articlesWithCategory = categoryId
+    ? articles.filter(
+        (a) =>
+          a.category_info.first_category_id === categoryId ||
+          a.category_info.second_category_id === categoryId
+      )
+    : articles;
 
   if (sortFunc) {
     articlesWithCategory.sort(sortFunc);
@@ -52,7 +59,7 @@ export async function getArticles(categoryId = 0, sortBy = 'hot', offset = 0, li
  * @param {*} articleId 文章 ID
  */
 export async function getArticleById(articleId) {
-  const article = articles.find(a => a.article_id === articleId);
+  const article = articles.find((a) => a.article_id === articleId);
   if (article) {
     return {
       code: 0,
@@ -61,7 +68,7 @@ export async function getArticleById(articleId) {
   }
   return {
     code: 404,
-    error_message: '找不到文章',
+    error_message: "找不到文章",
   };
 }
 
@@ -71,7 +78,11 @@ export async function getArticleById(articleId) {
  * @param {*} offset 分页参数参考 sql 的 offset 和 limit
  * @param {*} limit 同上
  */
-export async function getCommentsByArticleId(articleId, offset = 0, limit = 10) {
+export async function getCommentsByArticleId(
+  articleId,
+  offset = 0,
+  limit = 10
+) {
   return {
     code: 0,
     data: {

@@ -8,7 +8,7 @@ import { getArticleById } from "../../fake-api";
 
 const triggerHeight = 200;
 
-export default function ArticleDetail({ history, match, user }) {
+export default function ArticleDetail({ history, match, user, logout }) {
   const [article, setArticle] = useState(null);
 
   const trigger = useScrollTrigger({
@@ -20,7 +20,6 @@ export default function ArticleDetail({ history, match, user }) {
   useEffect(() => {
     getArticleById(match.params.id).then((res) => {
       setArticle(res.data.article);
-      console.log(res.data.article);
     });
   }, []);
 
@@ -98,7 +97,13 @@ export default function ArticleDetail({ history, match, user }) {
   if (article === null) return <Article article={null} />;
   return (
     <React.Fragment>
-      <Header trigger={trigger} history={history} />
+      <Header
+        trigger={trigger}
+        history={history}
+        user={user}
+        showUser={true}
+        logout={logout}
+      />
       <div className="article-detail-background">
         <div className="article-detail-container">
           <ArticleHeader article={article} />

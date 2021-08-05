@@ -21,11 +21,9 @@ class App extends Component {
       "https://qc5zbs.fn.thelarkcloud.com/user_register",
       user
     );
-    console.log("Register...");
-    console.log(res);
     if (res.data.success) {
-      this.setState({ user });
-      localStorage.setItem("user", user);
+      this.setState({ user: user.user_name });
+      localStorage.setItem("user", user.user_name);
       return true;
     }
     return false;
@@ -36,14 +34,17 @@ class App extends Component {
       "https://qc5zbs.fn.thelarkcloud.com/user_login",
       user
     );
-    console.log("Login...");
-    console.log(res);
     if (res.data.success) {
-      this.setState({ user });
-      localStorage.setItem("user", user);
+      this.setState({ user: user.user_name });
+      localStorage.setItem("user", user.user_name);
       return true;
     }
     return false;
+  };
+
+  logout = () => {
+    this.setState({ user: null });
+    localStorage.removeItem("user");
   };
 
   render() {
@@ -59,19 +60,30 @@ class App extends Component {
                   {...props}
                   login={this.login}
                   register={this.register}
+                  logout={this.logout}
                 />
               )}
             />
             <Route
               path="/"
               exact
-              render={(props) => <MainPage {...props} user={this.state.user} />}
+              render={(props) => (
+                <MainPage
+                  {...props}
+                  user={this.state.user}
+                  logout={this.logout}
+                />
+              )}
             />
             <Route
               path="/:id"
               exact
               render={(props) => (
-                <ArticleDetail {...props} user={this.state.user} />
+                <ArticleDetail
+                  {...props}
+                  user={this.state.user}
+                  logout={this.logout}
+                />
               )}
             />
             <Redirect to="/" />

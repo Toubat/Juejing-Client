@@ -23,7 +23,7 @@ export default function InfiniteScrollList({
     setOffset(0);
     setHasMore(true);
     setLoading(false);
-  }, [primaryCategory, secondaryCategory]);
+  }, [primaryCategory, secondaryCategory, sortBy]);
 
   const lastArticleElementRef = useCallback(
     (node) => {
@@ -35,10 +35,10 @@ export default function InfiniteScrollList({
           setTimeout(() => {
             getArticles(primaryCategory, sortBy, offset, loadAmount)
               .then((res) => {
+                // console.log(`Offset: ${offset}, sortBy: ${sortBy}`);
                 setArticles((articles) => [...articles, ...res.data.articles]);
                 setHasMore(res.has_more);
                 setOffset((offset) => offset + loadAmount);
-                console.log(`Offset: ${offset}`);
                 setLoading(false);
               })
               .catch((e) => {
@@ -49,7 +49,7 @@ export default function InfiniteScrollList({
       });
       if (node) observer.current.observe(node);
     },
-    [loading, hasMore]
+    [loading, hasMore, sortBy, offset]
   );
 
   const getFilteredArticles = (articles) => {
@@ -60,7 +60,6 @@ export default function InfiniteScrollList({
     );
   };
 
-  // console.log(articles);
   return (
     <React.Fragment>
       <Paper className="post-list" style={{ borderRadius: 0 }}>

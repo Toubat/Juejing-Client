@@ -16,7 +16,7 @@ import { getCategories } from "../../fake-api";
 
 const triggerHeight = 200;
 
-export default function MainPage({ history, user }) {
+export default function MainPage({ history, user, logout }) {
   const [primaryTab, setPrimaryTab] = useState(0);
   const [categories, setCategories] = useState([]);
   const [sortBy, setSortBy] = useState("hot");
@@ -31,7 +31,6 @@ export default function MainPage({ history, user }) {
   useEffect(() => {
     getCategories().then((res) => {
       setCategories(res.data.categories);
-      console.log(res.data.categories);
     });
   }, []);
 
@@ -68,7 +67,13 @@ export default function MainPage({ history, user }) {
 
   return (
     <React.Fragment>
-      <Header trigger={trigger} history={history} />
+      <Header
+        trigger={trigger}
+        history={history}
+        user={user}
+        showUser={true}
+        logout={logout}
+      />
       <MainTabs />
       <MainContent
         trigger={trigger}

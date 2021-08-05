@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Header from "../common/Header";
 
-export default function AuthPage({ history, login, register }) {
+export default function AuthPage({ history, login, register, logout }) {
   const [selectLogin, setSelectLogin] = useState(true);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -34,7 +34,13 @@ export default function AuthPage({ history, login, register }) {
 
   return (
     <React.Fragment>
-      <Header trigger={false} />
+      <Header
+        history={history}
+        trigger={false}
+        user={null}
+        showUser={false}
+        logout={logout}
+      />
       <div className="auth-background">
         <div className="auth-window">
           <div className="auth-icon">

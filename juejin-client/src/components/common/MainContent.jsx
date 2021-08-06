@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import InfiniteScrollList from "./InfiniteScrollList";
 import TabItem from "./TabItem.jsx";
 
-export default function MainContent({ trigger, primaryTab, sortBy, history }) {
+export default function MainContent({
+  trigger,
+  primaryTab,
+  sortBy,
+  history,
+  user,
+}) {
   const [secondaryTab, setSecondaryTab] = useState(null);
 
   useEffect(() => {
@@ -20,7 +26,13 @@ export default function MainContent({ trigger, primaryTab, sortBy, history }) {
   return (
     <React.Fragment>
       <div className="main-content">
-        <div className="secondary-tabs" style={{ borderRadius: 15 }}>
+        <div
+          className="secondary-tabs"
+          style={{
+            borderRadius: 15,
+            display: sortBy === "history" ? "none" : undefined,
+          }}
+        >
           <div className="tab-container">
             {primaryTab.children ? (
               primaryTab.children.map((tab, i) => (
@@ -42,6 +54,7 @@ export default function MainContent({ trigger, primaryTab, sortBy, history }) {
           secondaryCategory={secondaryTab}
           sortBy={sortBy}
           history={history}
+          user={user}
         />
       </div>
     </React.Fragment>

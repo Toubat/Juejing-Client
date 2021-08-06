@@ -42,8 +42,11 @@ export default function MainPage({ history, user, logout }) {
     setValue(newValue);
   };
 
-  const MainTabs = () => (
-    <div className={clsx("main-tabs", trigger ? "sticky" : "tab-sticky")}>
+  const MainTabs = ({ display }) => (
+    <div
+      className={clsx("main-tabs", trigger ? "sticky" : "tab-sticky")}
+      style={{ display: display ? undefined : "none" }}
+    >
       {categories.map((tab, i) => (
         <React.Fragment key={`${tab}-${i}`}>
           <div
@@ -74,7 +77,7 @@ export default function MainPage({ history, user, logout }) {
         showUser={true}
         logout={logout}
       />
-      <MainTabs />
+      <MainTabs display={sortBy !== "history"} />
       <MainContent
         trigger={trigger}
         primaryTab={
@@ -83,6 +86,7 @@ export default function MainPage({ history, user, logout }) {
         }
         sortBy={sortBy}
         history={history}
+        user={user}
       />
       <BottomNavigation
         value={value}
@@ -108,6 +112,7 @@ export default function MainPage({ history, user, logout }) {
         <BottomNavigationAction
           label="历史"
           icon={<HistoryIcon className="bottom-icon" />}
+          onClick={() => setSortBy("history")}
         />
       </BottomNavigation>
     </React.Fragment>

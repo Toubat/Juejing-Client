@@ -1,12 +1,13 @@
 import React, { forwardRef } from "react";
 import LoadingBlock from "./LoadingBlock";
 import clsx from "clsx";
+import axios from "axios";
 // icon
 import ViewIcon from "@material-ui/icons/Visibility";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import CommentIcon from "@material-ui/icons/ChatBubbleOutlineRounded";
 
-function Article({ article, loading, history }, ref) {
+function Article({ article, loading, history, user }, ref) {
   const unixTimeToDate = () => {
     const publishTime = new Date(parseInt(article.article_info.ctime) * 1000);
     const currTime = new Date(Math.round(Date.now()));
@@ -31,6 +32,20 @@ function Article({ article, loading, history }, ref) {
     const secondCategory = article.category_info.second_category_name;
 
     return `${firstCategory} ∙ ${secondCategory}`;
+  };
+
+  const handleArticleClick = (articleId) => {
+    history.push(`/${articleId}`);
+    addHistoryRecord(articleId);
+  };
+
+  const addHistoryRecord = async (articleId) => {
+    if (user) {
+      axios.post("https://qc5zbs.fn.thelarkcloud.com/add_history_record", {
+        user_name: user,
+        article_id: articleId,
+      });
+    }
   };
 
   if (loading || article === null) {
@@ -74,7 +89,7 @@ function Article({ article, loading, history }, ref) {
   return (
     <div
       className="article-container"
-      onClick={() => history.push(`/${article.article_info.article_id}`)}
+      onClick={() => handleArticleClick(article.article_info.article_id)}
     >
       <div className="article-status">
         <div className="article-status-item dark" style={{ paddingLeft: 0 }}>

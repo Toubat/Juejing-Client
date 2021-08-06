@@ -249,6 +249,14 @@ code {
   overflow-y: scroll;
 }
 
+.list-empty {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Article */
 .article-container {
   display: flex;

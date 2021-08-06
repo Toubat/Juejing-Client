@@ -6,24 +6,29 @@ export default function AuthPage({ history, login, register, logout }) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
+  const [processing, setProcessing] = useState(false);
 
   const handleAuthAction = async (e) => {
     e.preventDefault();
     if (selectLogin) {
+      setProcessing(true);
       const loginSuccess = await login({
         user_name: userName,
         password: password,
       });
+      setProcessing(false);
       if (loginSuccess) {
         history.push("/");
       } else {
         alert("登录失败 - 用户名或密码错误");
       }
     } else {
+      setProcessing(true);
       const registerSuccess = await register({
         user_name: userName,
         password: password,
       });
+      setProcessing(false);
       if (registerSuccess) {
         history.push("/");
       } else {
@@ -126,6 +131,7 @@ export default function AuthPage({ history, login, register, logout }) {
               className="auth-button"
               onClick={(e) => handleAuthAction(e)}
               disabled={
+                processing ||
                 userName.length === 0 ||
                 password.length === 0 ||
                 (selectLogin
@@ -133,7 +139,9 @@ export default function AuthPage({ history, login, register, logout }) {
                   : rePassword.length === 0 || password !== rePassword)
               }
             >
+              {processing && "正在"}
               {selectLogin ? "登录" : "注册"}
+              {processing && "..."}
             </button>
             <div
               className="auth-switch"

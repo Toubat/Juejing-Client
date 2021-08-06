@@ -51,7 +51,7 @@ export default function Comment({ article }) {
               .catch((e) => {
                 setLoading(false);
               });
-          }, 1000);
+          }, 500);
         }
       });
       if (node) observer.current.observe(node);

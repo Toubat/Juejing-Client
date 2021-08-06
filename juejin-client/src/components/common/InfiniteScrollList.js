@@ -42,9 +42,10 @@ export default function InfiniteScrollList({
             historyArticles.push(res.data.article);
           }
         }
-
         setArticles(historyArticles);
+        setLoading(false);
       };
+      setLoading(true);
       loadArticles();
     }
   }, [sortBy]);
@@ -78,7 +79,7 @@ export default function InfiniteScrollList({
               .catch((e) => {
                 setLoading(false);
               });
-          }, 1000);
+          }, 500);
         }
       });
       if (node) observer.current.observe(node);
@@ -144,7 +145,7 @@ export default function InfiniteScrollList({
                     color: "var(--dark-color)",
                   }}
                 />
-                <div>历史记录为空</div>
+                <div>{loading ? "加载中..." : "历史记录为空"}</div>
                 {!user && (
                   <div style={{ paddingTop: 20 }}>请登录后查看历史记录</div>
                 )}

@@ -329,7 +329,7 @@ code {
 }
 
 .article-brief.no-image {
-  max-width: calc(100vw - 20px - 30px - 10px);
+  max-width: min(calc(100vw - 20px - 30px - 10px), 950px);
 }
 
 .article-footer {

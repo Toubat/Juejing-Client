@@ -24,9 +24,10 @@ export default function ArticleDetail({ history, match, user, logout }) {
   }, []);
 
   const unixTimeToDate = (time) => {
+    console.log(time);
     const publishTime = new Date(parseInt(time) * 1000);
 
-    const year = publishTime.getYear();
+    const year = publishTime.getFullYear();
     const month = publishTime.getMonth().toString().padStart(2, "0");
     const day = publishTime.getDay().toString().padStart(2, "0");
 
